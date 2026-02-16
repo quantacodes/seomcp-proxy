@@ -32,7 +32,7 @@ USAGE
   seomcp-proxy --help       Print this help
 
 ENVIRONMENT VARIABLES
-  SEOMCP_API_KEY            (required) API key (sk_live_xxx format)
+  SEOMCP_API_KEY            (required) API key (sk_live_REDACTED format)
   GOOGLE_SERVICE_ACCOUNT    (required) Path to Google service account JSON
   GSC_PROPERTIES            (required for GSC) Comma-separated domain names
   GA4_PROPERTIES            (required for GA4) Comma-separated propertyID:domain
