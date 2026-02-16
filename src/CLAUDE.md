@@ -7,6 +7,7 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #20483 | 3:55 PM | ✅ | Security Fix - API Key Example Redacted in Documentation | ~257 |
 | #20474 | 3:48 PM | 🔵 | SEO-MCP Proxy MCP Protocol Implementation with Cloud API Bridge | ~526 |
 | #20473 | " | 🔵 | SEO-MCP Proxy Client Implementation for Cloud API Integration | ~510 |
 | #20472 | " | 🔵 | SEO-MCP Proxy Architecture - Local MCP-to-HTTPS Bridge | ~499 |
