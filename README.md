@@ -96,11 +96,14 @@ skills/seo-mcp-reports/
 
 ### How to Use
 
-**OpenClaw users:** Drop the `skills/seo-mcp-reports` folder into your workspace skills directory. It auto-loads when you ask for SEO reports.
+See **[INSTALL.md](skills/seo-mcp-reports/INSTALL.md)** for setup instructions for:
 
-**Claude Desktop / Cursor / Other agents:** Copy the skill files into your project and reference them in your agent's system prompt or project knowledge.
-
-**Any AI agent:** Read `SKILL.md` for the quick start guide with the base design system, then reference files in `references/` for full templates and analysis functions.
+- **Claude Code** — project-level or global CLAUDE.md
+- **Claude Desktop** — project knowledge + custom instructions
+- **Cursor** — .cursor/rules or .cursorrules
+- **VSCode + Continue.dev** — .continuerules + context providers
+- **OpenClaw** — drop into workspace skills/
+- **Windsurf / Other agents** — universal setup pattern
 
 ---
 
