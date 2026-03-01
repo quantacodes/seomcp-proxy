@@ -1,6 +1,6 @@
 # @seomcp/proxy
 
-Local MCP proxy for [seo-mcp](https://github.com/quantacodes/seo-mcp) — 38 SEO tools in your AI assistant.
+Local MCP proxy for [seo-mcp](https://github.com/quantacodes/seo-mcp) — 39 SEO tools in your AI assistant.
 
 Reads your Google service account credentials from disk and forwards MCP tool calls to `api.seomcp.dev` over HTTPS. Zero runtime dependencies, single-file bundle, ~11KB.
 
@@ -68,7 +68,43 @@ seomcp-proxy version      # Print version
 seomcp-proxy --help       # Print help
 ```
 
-## 38 Tools Available
+## 📊 SEO Report Skill (Bundled)
+
+This repo includes the **seo-mcp-reports** skill — a comprehensive knowledge pack that teaches AI agents how to generate professional, agency-quality SEO reports with charts, styled tables, and visual dashboards.
+
+### What's Included
+
+```
+skills/seo-mcp-reports/
+├── SKILL.md                      # Quick start + base design system
+└── references/
+    ├── templates.md              # Full HTML/CSS/Chart.js templates for 6 report types
+    ├── analysis.md               # Data processing functions (CWV, CTR, cannibalization)
+    └── setup.md                  # Setup guide, all 39 tools, pricing, troubleshooting
+```
+
+### Report Types
+
+| Type | Time | Best For |
+|------|------|----------|
+| Weekly | 10 min | Regular monitoring |
+| Monthly | 30 min | Client deliverables |
+| Quarterly | 2 hrs | Strategy reviews |
+| Technical | 20 min | Troubleshooting |
+| Competitive | 45 min | Strategy planning |
+| Agency (Client-Friendly) | 40 min | Non-technical stakeholders |
+
+### How to Use
+
+**OpenClaw users:** Drop the `skills/seo-mcp-reports` folder into your workspace skills directory. It auto-loads when you ask for SEO reports.
+
+**Claude Desktop / Cursor / Other agents:** Copy the skill files into your project and reference them in your agent's system prompt or project knowledge.
+
+**Any AI agent:** Read `SKILL.md` for the quick start guide with the base design system, then reference files in `references/` for full templates and analysis functions.
+
+---
+
+## 39 Tools Available
 
 ### Crawling & Audit (3)
 `site_audit` · `crawl_page` · `test_robots_txt`
