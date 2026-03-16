@@ -33,9 +33,10 @@ USAGE
 
 ENVIRONMENT VARIABLES
   SEOMCP_API_KEY            (required) API key (sk_live_REDACTED format)
-  GOOGLE_SERVICE_ACCOUNT    (required) Path to Google service account JSON
-  GSC_PROPERTIES            (required for GSC) Comma-separated domain names
-  GA4_PROPERTIES            (required for GA4) Comma-separated propertyID:domain
+  GOOGLE_SERVICE_ACCOUNT    (optional) Path to Google service account JSON — required for GSC/GA4 tools
+  GSC_PROPERTIES            (optional) Comma-separated domain names — required for GSC tools
+  GA4_PROPERTIES            (optional) Comma-separated propertyID:domain — required for GA4 tools
+  INDEXNOW_KEY              (optional) Your IndexNow API key — used by IndexNow submission tools
   SEOMCP_API_URL            (optional) Override API URL (default: https://api.seomcp.dev)
   SEOMCP_TIMEOUT            (optional) Request timeout in ms (default: 30000)
 
@@ -45,17 +46,20 @@ SETUP
 
      {
        "mcpServers": {
-         "seo": {
+         "seo-mcp": {
            "command": "seomcp-proxy",
            "env": {
              "SEOMCP_API_KEY": "sk_live_...",
              "GOOGLE_SERVICE_ACCOUNT": "/path/to/service-account.json",
              "GSC_PROPERTIES": "example.com,blog.example.com",
-             "GA4_PROPERTIES": "123:example.com,456:blog.example.com"
+             "GA4_PROPERTIES": "123:example.com,456:blog.example.com",
+             "INDEXNOW_KEY": "your-indexnow-key"
            }
          }
        }
      }
+
+  Note: Only SEOMCP_API_KEY is required. All other env vars are optional — only add what you need.
 
   3. Start using 38 SEO tools in your AI assistant!
 
@@ -83,16 +87,22 @@ async function runTest(): Promise<void> {
   const keyErr = validateApiKey(apiKey);
   check("SEOMCP_API_KEY set", !keyErr, keyErr ?? undefined);
 
-  // 2. Service account file exists
+  // 2. Service account file (optional — only needed for GSC/GA4 tools)
   const saPath = process.env.GOOGLE_SERVICE_ACCOUNT;
-  check("GOOGLE_SERVICE_ACCOUNT set", !!saPath, saPath ? saPath : "not set");
-
-  // 3. Service account valid JSON
   if (saPath) {
+    check("GOOGLE_SERVICE_ACCOUNT set", true, saPath);
     const cred = readCredentials(saPath);
     check("Service account JSON valid", cred.ok, cred.ok ? undefined : cred.message);
   } else {
-    check("Service account JSON valid", false, "skipped — path not set");
+    console.log(`ℹ️  GOOGLE_SERVICE_ACCOUNT — not set (optional, required for GSC/GA4 tools)`);
+  }
+
+  // 2b. IndexNow key (optional)
+  const indexnowKey = process.env.INDEXNOW_KEY;
+  if (indexnowKey) {
+    check("INDEXNOW_KEY set", true, `${indexnowKey.substring(0, 8)}...`);
+  } else {
+    console.log(`ℹ️  INDEXNOW_KEY — not set (optional, required for IndexNow tools)`);
   }
 
   // 4. Cloud health check

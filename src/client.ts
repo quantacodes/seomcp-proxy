@@ -139,7 +139,7 @@ export async function callTool(
   apiKey: string,
   toolName: string,
   args: Record<string, unknown>,
-  credentials: ServiceAccountCredentials,
+  credentials: ServiceAccountCredentials | undefined,
   gscProperty?: string,
   ga4Property?: string,
 ): Promise<CloudResult> {
@@ -149,7 +149,7 @@ export async function callTool(
     tool: toolName,
     arguments: args,
     credentials: {
-      google_service_account: credentials,
+      ...(credentials ? { google_service_account: credentials } : {}),
       ...(gscProperty ? { gsc_properties: gscProperty } : {}),
       ...(ga4Property ? { ga4_properties: ga4Property } : {}),
     },

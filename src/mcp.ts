@@ -87,18 +87,17 @@ async function handleToolsCall(
     return;
   }
 
-  // Read credentials from disk (fresh every call)
+  // Read credentials from disk (fresh every call — optional for non-Google tools)
   const credPath = process.env.GOOGLE_SERVICE_ACCOUNT;
   const credResult = readCredentials(credPath);
 
-  if (!credResult.ok) {
-    if (credResult.code === "missing") {
-      send(errors.missingCredentials(id));
-    } else {
-      send(errors.invalidCredentials(id, credResult.field ?? "unknown"));
-    }
+  // Only reject hard credential errors (invalid JSON etc.) — missing = fine for non-GSC/GA4 tools
+  if (!credResult.ok && credResult.code === "invalid") {
+    send(errors.invalidCredentials(id, credResult.field ?? "unknown"));
     return;
   }
+
+  const credentials = credResult.ok ? credResult.credentials : undefined;
 
   // Forward to cloud
   const args = params.arguments ?? {};
@@ -106,11 +105,17 @@ async function handleToolsCall(
   const gscProperties = process.env.GSC_PROPERTIES || process.env.GSC_PROPERTY;
   const ga4Properties = process.env.GA4_PROPERTIES || process.env.GA4_PROPERTY;
 
+  // Inject INDEXNOW_KEY from env if the tool needs it and user didn't pass it in args
+  const INDEXNOW_TOOLS = ["indexnow_submit_url", "indexnow_batch_submit", "indexnow_submit_sitemap", "indexnow_submit_file"];
+  if (INDEXNOW_TOOLS.includes(toolName) && !args.indexnow_key && process.env.INDEXNOW_KEY) {
+    args.indexnow_key = process.env.INDEXNOW_KEY;
+  }
+
   const result = await callTool(
     apiKey!,
     toolName,
     args,
-    credResult.credentials,
+    credentials,
     gscProperties,
     ga4Properties,
   );
